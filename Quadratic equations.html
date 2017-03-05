@@ -2,26 +2,79 @@
 <html>
 <head>
 	<title>Quardatic Equations</title>
-	<script type="text/javascript">
-
-		var biggestNum = 4;
-		var lowestNum = -12;
-		var output;
-		var a = 3;
-		var b = 10;
-		var c = -2;
-
-		for(var x = lowestNum; x <= biggestNum; x++){
-			output = a*x*x+b*x+c;
-			document.write(x);
-			document.write(" : ");
-			document.write(output);
-			document.write("<br>");
-		}
-
-	</script>
+		
 </head>
 <body>
+	<canvas id="canvas" width="500" height="500" style="border: 2px solid #000000"></canvas>
 
+	<script type="text/javascript">
+
+		// Variables for Equation
+		var biggestNum = 10;
+		var lowestNum = -10;
+		var output;
+		var a = 4;
+		var b = -3;
+		var c = 2;
+		// Variables for canvas
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		// These numbers come out from the equation
+		var x;
+		var y;
+		// These are the coordinates to be plotter onto the canvas
+		var xGraph;
+		var yGraph;
+		// 1 is lowest quality. Smaller numbers will be higher quality but will take longer to load.
+		var quality = 0.005;
+
+
+		function drawGrid(){
+			// draws all lines
+			for(var i = 1; i <= 20; i++){
+				ctx.beginPath();
+				ctx.moveTo(0, 25*i);
+				ctx.lineTo(500, 25*i);
+				ctx.stroke();
+				ctx.beginPath();
+				ctx.moveTo(25*i, 0);
+				ctx.lineTo(25*i, 500);
+				ctx.stroke();
+			}
+			// draws axis
+			ctx.strokeStyle = "#ff0000";
+			ctx.beginPath();
+			ctx.moveTo(250,0);
+			ctx.lineTo(250,500);
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.moveTo(0,250);
+			ctx.lineTo(500,250);
+			ctx.stroke();
+		}
+
+		// will plot a point onto the canvas
+		function plot(x,y){
+			ctx.beginPath()
+			ctx.strokeStyle = "#00ffff";
+			ctx.rect(x,y,1,1);
+			ctx.stroke();
+		}
+
+		drawGrid();
+
+		for(x = lowestNum; x <= biggestNum; x += quality){
+			// The equation
+			y = a*x*x+b*x+c;
+			// Converting output numbers to cnavas coordinates
+			xGraph = 250+25*x;
+			yGraph = 250-25*y;
+
+			plot(xGraph,yGraph);
+			}
+
+
+
+	</script>
 </body>
 </html>
